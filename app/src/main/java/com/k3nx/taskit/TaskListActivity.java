@@ -1,5 +1,6 @@
 package com.k3nx.taskit;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,6 +39,10 @@ public class TaskListActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d(TAG, "Position Clicked is " + position);
+                Task task = (Task)parent.getAdapter().getItem(position);
+                Intent i = new Intent(TaskListActivity.this, TaskActivity.class);
+                i.putExtra(TaskActivity.EXTRA, task);
+                startActivity(i);
             }
         });
     }
