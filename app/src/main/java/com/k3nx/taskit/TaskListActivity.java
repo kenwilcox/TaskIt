@@ -2,10 +2,12 @@ package com.k3nx.taskit;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ListView;
@@ -13,6 +15,8 @@ import android.widget.TextView;
 
 
 public class TaskListActivity extends ActionBarActivity {
+
+    private static final String TAG = "TaskListActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +31,15 @@ public class TaskListActivity extends ActionBarActivity {
         items[1].setDone(true);
         items[2] = new Task();
         items[2].setName("Task 3");
+
         ListView listView = (ListView)findViewById(R.id.task_list);
         listView.setAdapter(new TaskAdapter(items));
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(TAG, "Position Clicked is " + position);
+            }
+        });
     }
 
     private class TaskAdapter extends ArrayAdapter<Task> {
