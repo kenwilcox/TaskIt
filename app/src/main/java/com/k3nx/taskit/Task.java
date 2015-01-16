@@ -34,4 +34,8 @@ public class Task {
     public void setDone(boolean done) {
         mDone = done;
     }
+
+    public String toString() {
+        return mName;
+    }
 }
