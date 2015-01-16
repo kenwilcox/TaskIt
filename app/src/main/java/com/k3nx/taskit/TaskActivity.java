@@ -1,22 +1,26 @@
 package com.k3nx.taskit;
 
+import android.app.DatePickerDialog;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
+//import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 
 import java.text.DateFormat;
+import java.util.Calendar;
 
 
 public class TaskActivity extends ActionBarActivity {
 
     public static final String EXTRA = "TaskExtra";
-    private static final String TAG = "TaskActivity";
+    //private static final String TAG = "TaskActivity";
+    private Calendar mCal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +28,9 @@ public class TaskActivity extends ActionBarActivity {
         setContentView(R.layout.activity_task);
 
         Task task = (Task)getIntent().getSerializableExtra(EXTRA);
-        Log.d(TAG, task.getName());
+
+        mCal = Calendar.getInstance();
+        mCal.setTime(task.getDueDate());
 
         EditText taskNameInput = (EditText)findViewById(R.id.task_name);
         Button dateButton = (Button)findViewById(R.id.task_date);
@@ -43,7 +49,13 @@ public class TaskActivity extends ActionBarActivity {
         dateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DatePickerDialog dpd = new DatePickerDialog(TaskActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
+                    }
+                }, mCal.get(Calendar.YEAR), mCal.get(Calendar.MONTH), mCal.get(Calendar.DAY_OF_MONTH));
+                dpd.show();
             }
         });
 
