@@ -30,7 +30,8 @@ public class TaskListActivity extends ActionBarActivity {
 
     private class TaskAdapter extends ArrayAdapter<Task> {
         TaskAdapter(Task[] tasks) {
-            super(TaskListActivity.this, android.R.layout.simple_list_item_1, tasks);
+            // Using a custom layout requires the TextView id
+            super(TaskListActivity.this, R.layout.task_list_row, R.id.task_item_name, tasks);
         }
 
         @Override
