@@ -22,29 +22,32 @@ public class TaskActivity extends ActionBarActivity {
     //private static final String TAG = "TaskActivity";
     private Calendar mCal;
     private Button mDateButton;
+    private Task mTask;
+    private EditText mTaskNameInput;
+    private CheckBox mDoneBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
 
-        Task task = (Task)getIntent().getSerializableExtra(EXTRA);
+        mTask = (Task)getIntent().getSerializableExtra(EXTRA);
 
         mCal = Calendar.getInstance();
-        mCal.setTime(task.getDueDate());
+        mCal.setTime(mTask.getDueDate());
 
-        EditText taskNameInput = (EditText)findViewById(R.id.task_name);
+        mTaskNameInput = (EditText)findViewById(R.id.task_name);
         mDateButton = (Button)findViewById(R.id.task_date);
-        CheckBox doneBox = (CheckBox)findViewById(R.id.task_done);
+        mDoneBox = (CheckBox)findViewById(R.id.task_done);
         Button saveButton = (Button)findViewById(R.id.save_button);
 
-        taskNameInput.setText(task.getName());
-        if(task.getDueDate() == null) {
+        mTaskNameInput.setText(mTask.getName());
+        if(mTask.getDueDate() == null) {
             mDateButton.setText(getResources().getString(R.string.no_date));
         } else {
             updateButton();
         }
-        doneBox.setChecked(task.isDone());
+        mDoneBox.setChecked(mTask.isDone());
 
         mDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +66,9 @@ public class TaskActivity extends ActionBarActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mTask.setName(mTaskNameInput.getText().toString());
+                mTask.setDone(mDoneBox.isChecked());
+                mTask.setDueDate(mCal.getTime());
             }
         });
     }
