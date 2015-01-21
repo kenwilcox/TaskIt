@@ -112,6 +112,10 @@ public class TaskListActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+        if(id == R.id.add_task) {
+            Log.d(TAG, "Clicked add action!");
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }

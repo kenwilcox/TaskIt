@@ -5,6 +5,7 @@
 
     <item
         android:title="@string/add_task"
+        android:id="@+id/add_task"
         android:orderInCategory="101"
         android:icon="@android:drawable/ic_menu_add"
         app:showAsAction="ifRoom"/>
