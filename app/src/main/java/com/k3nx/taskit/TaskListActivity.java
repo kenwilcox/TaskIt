@@ -22,6 +22,7 @@ public class TaskListActivity extends ActionBarActivity {
 
     private static final String TAG = "TaskListActivity";
     private static final int EDIT_TASK_REQUEST = 10;
+    private static final int CREATE_TASK_REQUEST = 20;
 
     private ArrayList<Task> mTasks;
     private int mLastPositionClicked;
@@ -65,12 +66,20 @@ public class TaskListActivity extends ActionBarActivity {
 
         if (requestCode == EDIT_TASK_REQUEST) {
             if (resultCode == RESULT_OK) {
-                Task task = (Task) data.getSerializableExtra(TaskActivity.EXTRA);
+                Task task = (Task)data.getSerializableExtra(TaskActivity.EXTRA);
                 mTasks.set(mLastPositionClicked, task);
                 mAdapter.notifyDataSetChanged();
                 Log.d(TAG, task.getName());
             }
+        } else if (requestCode == CREATE_TASK_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Task task = (Task)data.getSerializableExtra(TaskActivity.EXTRA);
+                mTasks.add(task);
+                mAdapter.notifyDataSetChanged();
+                Log.d(TAG, task.getName());
+            }
         }
+
     }
 
     private class TaskAdapter extends ArrayAdapter<Task> {
@@ -114,6 +123,8 @@ public class TaskListActivity extends ActionBarActivity {
         }
         if(id == R.id.add_task) {
             Log.d(TAG, "Clicked add action!");
+            Intent i = new Intent(TaskListActivity.this, TaskActivity.class);
+            startActivityForResult(i, CREATE_TASK_REQUEST);
             return true;
         }
 
